@@ -44,24 +44,32 @@ export default class AddExpenses extends React.Component{
     state={
         deliveryDateFrom:"",
         name:"",
-        amount:""
+        amount:"",
+        quantity:""
     }
 
     submit=()=>{
+        if(this.state.name==""|| this.state.amount==""){
+            alert('field is missing')
+        }else{
         let currentDate=this.state.deliveryDateFrom;
         let day=currentDate.getDate();
         let month=currentDate.getMonth() + 1;
         let year=currentDate.getFullYear();
+        
         let obj={
+            userid:"Raj",
             day:day,
             month:month,
             year:year,
-            name:this.state.name,
-            amount:this.state.amount
+            qty:this.state.amount,
+            price:this.state.amount,
+            category:this.state.name
         }
         console.log(obj);
-        this.setState({name:"",amount:""})
+        this.setState({name:"",amount:"",quantity:"",deliveryDateFrom:""})
         this.props.submit(obj);
+    }
     }
 
     handleChangeDeliveryDateFrom = (event, date) => this.setState({deliveryDateFrom: date});
@@ -104,13 +112,23 @@ export default class AddExpenses extends React.Component{
        />
                         </Row>
                         <Row>
-                        <center>
-        <FloatingActionButton style={style}>
-      <ContentAdd onTouchTap={this.submit}/>
-    </FloatingActionButton>
-    </center>
+                        <TextField
+    type="number"
+  value={this.state.quantity}
+      hintText=" Enter Quantity"
+      onChange = {(event,newValue) => this.setState({quantity:newValue})}
+      floatingLabelText="how much is the new item?"
+    //   fullWidth={true}
+    />
                             </Row>
                     </Col>
+                    <Row>
+                    <center>
+       <FloatingActionButton style={style}>
+     <ContentAdd onTouchTap={this.submit}/>
+   </FloatingActionButton>
+   </center>  
+                        </Row>
                     </Row>
    
            

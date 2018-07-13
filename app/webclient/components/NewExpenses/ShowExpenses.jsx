@@ -1,19 +1,4 @@
-// import React from 'react';
-// import {Grid,Row,Col,Carousel} from 'react-bootstrap';
-// import RaisedButton from 'material-ui/RaisedButton';
 
-// export default class ShowExpenses extends React.Component{
-
-//     render(){
-
-//         return(
-
-//             <div >
-//             ShowExpenses
-//             </div>
-//         )
-//     }
-// }
 
 import React from 'react';
 import {Grid,Row,Col,Carousel} from 'react-bootstrap';
@@ -26,18 +11,9 @@ export default class ShowExpenses extends React.Component{
     render(){
         console.log('today expenses');
         // console.log(this.props.data.expenses);
-        let total=0;
-        if(this.props.data.length!=0){
-        let newData=this.props.data.map((data)=>{
-            total=total+parseInt(data.amount);
-            return(
-                <tr>
-                    <td>{data.name}</td>
-                    <td>{data.amount + " Rs"}</td>
-                    </tr> 
-            )
-        })
+        
        
+       if(this.props.data.length!=0){
 
         return(
              <Table  bordered style={{textAlign:"center"}}>
@@ -45,17 +21,39 @@ export default class ShowExpenses extends React.Component{
  
     <tr >
 	
-      <th colSpan={2} style={{textAlign:"center"}}>{this.props.timeStamp.day+" / "+this.props.timeStamp.month+ " / "+this.props.timeStamp.year}</th>
+      <th colSpan={2} style={{textAlign:"center"}}>{this.props.data[0].day+" / "+this.props.data[0].month+ " / "+this.props.data[0].year}</th>
     </tr>
   </thead>
   <tbody>
             
-            {newData}
-            <tr style={{backgroundColor:"#CCCDD1"}}>
-                    <td >Total</td>
-                    <td> {total + "Rs"}</td>
-                    
-                    </tr>
+            <tr>
+                <td>
+                    Quantity
+               
+                    </td>
+                    <td>
+                        {this.props.data[0].qty}
+                        </td>
+                </tr>
+                <tr>
+                <td>
+                    Price
+               
+                    </td>
+                    <td>
+                    {this.props.data[0].price}
+                        </td>
+                </tr>
+                <tr>
+                <td>
+                    Catagory
+               
+                    </td>
+                    <td>
+                        {this.props.data[0].category}
+                        </td>
+                </tr>
+            
             </tbody>
             </Table>
         )

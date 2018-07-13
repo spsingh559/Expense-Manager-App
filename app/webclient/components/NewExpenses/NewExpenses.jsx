@@ -1,21 +1,37 @@
 import React from 'react';
 import {Grid,Row,Col,Carousel} from 'react-bootstrap';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import Axios from 'axios';   
 import AddExpenses from './AddExpenses';
 import ShowExpenses from './ShowExpenses';
 export default class NewExpenses extends React.Component{
     state={
         data:[],
-        timeStamp:''
+        
     }
 
     submit=(obj)=>{
-        this.setState({timeStamp:obj});
+        // this.setState({timeStamp:obj});
+
         
-        let newData=[{name:obj.name,amount:obj.amount}].concat(this.state.data);
+        let newData=[obj].concat(this.state.data);
 
         this.setState({data:newData})
+        Axios({
+            method:'POST',
+            url:'http://54.197.3.120:8080/createExpense',
+            data:obj,
+            headers: {  
+                'Content-Type': 'application/json'
+            }
+            })
+            .then((data) => {
+                alert('success');
+            })
+            .catch((error) => {
+                console.log(error);
+                console.log(error+"error in post create expenses");
+                });
     }
 
     render(){
@@ -29,12 +45,8 @@ export default class NewExpenses extends React.Component{
             <AddExpenses submit={this.submit}/>
             </Col>
             <Col xs={6}>
-            <ShowExpenses data={this.state.data} timeStamp={this.state.timeStamp}/>
-            <Row>
-                <Col xs={12}>
-                <RaisedButton label="Submit" primary={true} fullWidth={true} />
-                </Col>
-                </Row>
+            <ShowExpenses data={this.state.data} />
+           
             </Col>
             
             </Row>
